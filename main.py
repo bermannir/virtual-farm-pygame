@@ -16,7 +16,15 @@ from house_scene import HouseScene
 from barn_scene import BarnScene
 
 # --- Dynamic Path Handling ---
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+def get_base_path():
+    if getattr(sys, 'frozen', False):
+        # The application is frozen (compiled into an EXE)
+        return sys._MEIPASS
+    else:
+        # The application is running in a normal Python environment
+        return os.path.dirname(os.path.abspath(__file__))
+
+BASE_PATH = get_base_path()
 ASSETS_PATH = os.path.join(BASE_PATH, "assets", "sounds")
 BGM_PATH = os.path.join(ASSETS_PATH, "farm_theme.mp3")
 SND_PATH_TRACTOR = os.path.join(ASSETS_PATH, "tractor.wav")
